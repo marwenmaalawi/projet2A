@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>gestion_vol</class>
+ <widget class="QDialog" name="gestion_vol">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>919</width>
+    <height>490</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>861</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>GESTION VOLS</string>
+    </attribute>
+    <widget class="QTabWidget" name="tabWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>881</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>3</number>
+     </property>
+     <widget class="QWidget" name="widget">
+      <attribute name="title">
+       <string>ajouter</string>
+      </attribute>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>40</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>N_VOL :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>110</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>HEURE :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>170</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ORIGINE :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>250</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>STATUT :</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="AJOUTER_VOLS">
+       <property name="geometry">
+        <rect>
+         <x>550</x>
+         <y>170</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 15pt &quot;Lucida Sans&quot;;</string>
+       </property>
+       <property name="text">
+        <string>ajouter</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_N_vol">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>49</y>
+         <width>113</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_heure">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>100</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_origine">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>160</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>320</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);
+</string>
+       </property>
+       <property name="text">
+        <string>ID_DEST :</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_ID_DEST">
+       <property name="geometry">
+        <rect>
+         <x>268</x>
+         <y>310</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_status">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>240</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>valider</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>retard</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>annuler</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>afficher</string>
+      </attribute>
+      <widget class="QTableView" name="tab_vols">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>851</width>
+         <height>431</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>supprimer</string>
+      </attribute>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>60</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>N_VOL:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_suppvols">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>60</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="supprimervols">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>150</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;</string>
+       </property>
+       <property name="text">
+        <string>ok</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>modifier</string>
+      </attribute>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>320</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>STATUT :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>40</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>N_VOL :</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_status_mod">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>320</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>valider</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>retard</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>annuler</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>170</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ORIGINE :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>110</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>HEURE :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>380</y>
+         <width>101</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);
+</string>
+       </property>
+       <property name="text">
+        <string>ID_DEST :</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_ID_DEST_mod_vol">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>380</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_heure_mod">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>100</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_origine_mod">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>160</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_N_VOL_mod">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>40</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="mod_vol">
+       <property name="geometry">
+        <rect>
+         <x>570</x>
+         <y>162</y>
+         <width>75</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>MODIFIER</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_statut_mod">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>230</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_ID_DEST_mod">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>280</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_19">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>240</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ANCIEN STATUT :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_20">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>280</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 14pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);
+</string>
+       </property>
+       <property name="text">
+        <string>ANCIEN  ID_DEST :</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <attribute name="title">
+       <string>statistiques</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="title">
+       <string>bagage</string>
+      </attribute>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>GESTION DESTINATION</string>
+    </attribute>
+    <widget class="QTabWidget" name="tabWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>881</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>3</number>
+     </property>
+     <widget class="QWidget" name="widget_2">
+      <attribute name="title">
+       <string>ajouter</string>
+      </attribute>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>40</y>
+         <width>111</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 18pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ID :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>105</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>VILLE</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>190</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>DUREE</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="AJOUTER_DESTINATION">
+       <property name="geometry">
+        <rect>
+         <x>520</x>
+         <y>110</y>
+         <width>131</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 15pt &quot;Lucida Sans&quot;;
+font: 63 italic 15pt &quot;Lucida Sans&quot;;</string>
+       </property>
+       <property name="text">
+        <string>ajouter</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_ID_DEST">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>50</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_VILLE">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>120</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_DURREE">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>190</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_11">
+      <attribute name="title">
+       <string>afficher</string>
+      </attribute>
+      <widget class="QTableView" name="tab_dest">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>851</width>
+         <height>431</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_9">
+      <attribute name="title">
+       <string>supprimer</string>
+      </attribute>
+      <widget class="QLineEdit" name="lineEdit_suppdest">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>60</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="supprimer_dest">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>150</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;</string>
+       </property>
+       <property name="text">
+        <string>ok</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_10">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>53</y>
+         <width>47</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ID :</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_10">
+      <attribute name="title">
+       <string>modifier</string>
+      </attribute>
+      <widget class="QLineEdit" name="lineEdit_VILLE_mod">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>115</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_DURREE_mod">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>185</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>35</y>
+         <width>111</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 18pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>ID :</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>185</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>DUREE</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_18">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>100</y>
+         <width>71</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 63 italic 17pt &quot;Lucida Sans&quot;;
+color: rgb(0, 0, 168);</string>
+       </property>
+       <property name="text">
+        <string>VILLE</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_ID_DEST_mod">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>40</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="mod_dest">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>162</y>
+         <width>75</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>MODIFIER</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_13">
+      <attribute name="title">
+       <string>statistiques</string>
+      </attribute>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

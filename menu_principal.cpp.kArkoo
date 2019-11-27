@@ -1,0 +1,20 @@
+#include "menu_principal.h"
+#include "ui_menu_principal.h"
+
+menu_principal::menu_principal(QWidget *parent)
+    : QDialog(parent)
+    ui(new Ui::menu_principal)
+{
+    ui->setupUi(this);
+}
+
+menu_principal::~menu_principal()
+{
+    delete ui;
+}
+
+void menu_principal::on_pushButton_clicked()
+{
+    Dialog c;
+    c.exec();
+}
