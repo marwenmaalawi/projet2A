@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new/image">
+        <file>marwenV45.png</file>
+        <file>background-smh-avion.jpg.jpg</file>
+    </qresource>
+</RCC>
