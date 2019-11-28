@@ -22,8 +22,12 @@ public:
     bool ajouter_produit();
     QSqlQueryModel * afficher_produit();
     bool supprimer_produit(QString);
+    QSqlQueryModel * afficher_listprodect();
+    bool  modifier_produit();
+
 private:
     QString id_produit,type,date_fabrication,date_expiration,ID_FOURNISSEUR;
 };
 
 #endif // PRODECT_H
+

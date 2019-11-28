@@ -19,7 +19,7 @@ public:
     ~gestionproduit();
 
 private slots:
-    void on_pushButton_clicked();
+
 
     void on_Ajouter_produit_clicked();
 
@@ -31,10 +31,27 @@ private slots:
 
     void on_comboBox_activated(const QString &arg1);
 
+    void on_comboBox_modidfournisseur_activated(const QString &arg1);
+
+    void on_modifierfournisseur_clicked();
+
+
+    void on_comboBox_modidproduit_activated(const QString &arg1);
+
+    void on_comboBoxmodidproduitfournisseur_activated(const QString &arg1);
+
+    void on_modifierproduit_clicked();
+
+    void on_pushButton_clicked();
+    void sendMail();
+       void mailSent(QString);
+
+       void on_consulter_stat_clicked();
+
 private:
     Ui::gestionproduit *ui;
     prodect tmpproduit ;
     fournisseur tmpfournisseur;
-};
+};  
 
 #endif // GESTIONPRODUIT_H

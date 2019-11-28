@@ -18,7 +18,9 @@ public:
     QSqlQueryModel * afficher_fournisseur();
     bool supprimer_fournisseur(QString);
     QSqlQueryModel * afficher_listfournisseur();
-
+    bool modifier_fournisseur();
+    QSqlQueryModel * rechercher(QString);
+    QSqlQueryModel * stats();
 private:
     QString id,nom,mail;
 };

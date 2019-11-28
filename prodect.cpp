@@ -41,7 +41,7 @@ return    query.exec();
 QSqlQueryModel * prodect::afficher_produit()
 {QSqlQueryModel * model= new QSqlQueryModel();
 
-model->setQuery("select * from PRODUIT");
+model->setQuery("select * from PRODUIT order by DATEEX osc");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_produit"));
 model->setHeaderData(1, Qt::Horizontal, QObject::tr("type "));
 model->setHeaderData(2, Qt::Horizontal, QObject::tr("date_fabrication"));
@@ -62,3 +62,25 @@ query.bindValue(":ID_PRODUIT", id_produit);
 return (query.numRowsAffected()>0) ;
 }
 
+QSqlQueryModel * prodect::afficher_listprodect()
+{QSqlQueryModel* model =new QSqlQueryModel();
+model->setQuery("select id_produit from produit");
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("id_produit"));
+return model ;}
+
+bool prodect::modifier_produit()
+{QSqlQuery query ;
+
+ query.prepare("UPDATE PRODUIT SET id_produit=:ID_PRODUIT,type=:TYPE,date_fabrication=:DATE_FABRICATION,date_expiration=:DATE_EXPIRATION,id_fournisseur=:ID_FOURNISSEUR where id_produit=:ID_PRODUIT");
+         query.bindValue(":ID_PRODUIT",id_produit);
+         query.bindValue(":TYPE", type);
+         query.bindValue(":DATE_FABRICATION", date_fabrication);
+         query.bindValue(":DATE_EXPIRATION", date_expiration);
+         query.bindValue(":ID_FOURNISSEUR", ID_FOURNISSEUR);
+ query.exec();
+ if(query.numRowsAffected()==0){
+     return false;
+ } else{
+     return true;
+ }
+}
