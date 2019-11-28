@@ -6,129 +6,115 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>476</height>
+    <width>914</width>
+    <height>714</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image: url(:/new/image/background-smh-avion.jpg.jpg);</string>
+   <string notr="true">background-image: url(:/new/prefix1/77222952_822021531550740_3147503835832909824_n.jpg);
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>0</y>
-      <width>241</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-image: url(:/new/image/marwenV45.png);</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>60</y>
-      <width>42</width>
-      <height>16</height>
+      <x>180</x>
+      <y>150</y>
+      <width>151</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;LOGIN:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>User Name :</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>251</x>
-      <y>88</y>
-      <width>141</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>120</y>
-      <width>100</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;MOT DE PASSE :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
-    <property name="geometry">
-     <rect>
-      <x>251</x>
+      <x>320</x>
       <y>150</y>
-      <width>133</width>
-      <height>20</height>
+      <width>261</width>
+      <height>31</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="echoMode">
-     <enum>QLineEdit::Password</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>200</y>
-      <width>75</width>
-      <height>23</height>
+      <x>360</x>
+      <y>290</y>
+      <width>141</width>
+      <height>51</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 8pt &quot;MS Shell Dlg 2&quot;;
-background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Connecter</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>237</y>
-      <width>75</width>
-      <height>23</height>
+      <x>180</x>
+      <y>220</y>
+      <width>141</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 8pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(255, 255, 255);
-background-color: rgb(0, 0, 0);
-</string>
+    <property name="font">
+     <font>
+      <family>Script MT Bold</family>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
-     <string>Quitter</string>
+     <string>Password :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>220</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>226</y>
+      <width>20</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -137,7 +123,7 @@ background-color: rgb(0, 0, 0);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>711</width>
+     <width>914</width>
      <height>21</height>
     </rect>
    </property>

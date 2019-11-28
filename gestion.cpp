@@ -1,351 +1,461 @@
 #include "gestion.h"
 #include "ui_gestion.h"
+#include "smtp.h"
 #include "QMessageBox"
-#include "mainwindow.h"
-#include "mail.h"
-#include"notification.h"
-#include<QDebug>
-#include "statistiques.h"
-Gestion::Gestion(QWidget *parent) :
+#include"statistiques.h"
+#include "qcustomplot.h"
+#include <QString>
+#include "notification.h"
+gestion::gestion(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Gestion)
+    ui(new Ui::gestion)
 {
     ui->setupUi(this);
-    ui->tableView_3->setModel(tmpclient.afficher());
-    ui->tab_promotions->setModel(tmppromo.afficher());
- ui->comboBox->setModel(tmpclient.afficher_listclient());
- ui->comboBox_2->setModel(tmpclient.afficher_listclient());
- ui->comboBox_3->setModel(tmppromo.afficher_listpromo());
- ui->comboBox_4->setModel(tmppromo.afficher_listpromo());
+    setWindowModality(Qt::WindowModal);
+    ui->tab_avions->setModel(tmpavions.afficher_avions());
+    ui->tab_constructeur->setModel(tmpconstructeur.afficher_constructeur());
+    ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+    ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+    ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+    ui->comboBox_id_const_mod->setModel(tmpconstructeur.afficher_constructeurlist());
 
+    ui->comboBox_id_supp->setModel(tmpavions.getIdModel());
+    ui->comboBox_id_supp_const->setModel(tmpconstructeur.getIdModel());
 
+    connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
+    connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
 }
 
-
-Gestion::~Gestion()
+gestion::~gestion()
 {
     delete ui;
 }
 
-
-void Gestion::on_pushButton_15_clicked()
+void gestion::initialiser()
 {
- //  MainWindow m;
-    close();
-    //m.exec();
+    ui->lineEdit_idavion->clear();
+    //ui->lineEdit_etat->clear();
+
+    ui->lineEdit_idconstructeur->clear();
+    ui->lineEdit_nomconstructeur->clear();
+    ui->lineEdit_mailcostructeur->clear();
 }
 
-void Gestion::on_pushButton_17_clicked()
+void gestion::initialiser_modifier()
 {
-    close();
+    ui->lineEdit_etat_3->clear();
+    ui->lineEdit_nom_const_mod->clear();
+    ui->lineEdit_mail_const_mod->clear();
 }
 
-void Gestion::on_pushButton_19_clicked()
+void gestion::initialiser_supp()
 {
-    close();
+    ui->comboBox_id_supp->clear();
+    ui->comboBox_id_supp_const->clear();
 }
 
-void Gestion::on_pushButton_21_clicked()
+void gestion::refresh()
 {
-    close();
+    ui->tab_avions->setModel(tmpavions.afficher_avions());
+    ui->tab_constructeur->setModel(tmpconstructeur.afficher_constructeur());
+    ui->id_constructeur->setModel(tmpavions.afficher_avions());
+    ui->id_constructeur_3->setModel(tmpavions.afficher_avions());
+    ui->comboBox_id_mod->setModel(tmpavions.afficher_avions());
+    ui->comboBox_id_const_mod->setModel(tmpconstructeur.afficher_constructeurlist());
 }
 
-void Gestion::on_pushButton_18_clicked()
+
+void gestion::on_ajouter_constructeur_clicked()
 {
-    QString okd="";
-         notification ok;
-    QString num_passeport= ui->lineEdit_20->text();
-    bool test=tmpclient.supprimer_clients(num_passeport);
+    QString id = ui->lineEdit_idconstructeur->text();
+    QString nom= ui->lineEdit_nomconstructeur->text();
+    QString mail= ui->lineEdit_mailcostructeur->text();
+  constructeur e(id,nom,mail);
+
+  bool test=e.ajouter_constructeur();
+  if(test)
+{QString okd="";
+      notification ok;
+      ok.notification_ajout_constructeur(okd);
+      ui->tab_constructeur->setModel(tmpconstructeur.afficher_constructeur());
+      refresh();
+      initialiser();
+
+      //refresh
+      ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+      ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+      ui->comboBox_id_const_mod->setModel(tmpconstructeur.afficher_constructeurlist());
+
+      QMessageBox::information(nullptr, QObject::tr("Ajouter un constructeur"),
+                  QObject::tr("constructeur ajouté.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+  else
+      QMessageBox::critical(nullptr, QObject::tr("Ajouter un constructeur"),
+                  QObject::tr("constructeur existe deja  !.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+}
+
+
+void gestion::on_supprimer_constructeur_clicked()
+{
+
+    QString id = ui->comboBox_id_supp_const->currentText();
+    bool test=tmpconstructeur.supprimer_constructeur(id);
     if(test)
-    {ui->tableView_3->setModel(tmpclient.afficher());//refresh
-        QMessageBox::information(nullptr, QObject::tr("Supprimer un client"),
-                    QObject::tr("client supprimé.\n"
+    {ui->tab_constructeur->setModel(tmpconstructeur.afficher_constructeur());
+        refresh();
+        initialiser_supp();
+        //refresh
+        ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+        ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+        ui->comboBox_id_const_mod->setModel(tmpconstructeur.afficher_constructeurlist());
+        ui->comboBox_id_supp_const->setModel(tmpconstructeur.getIdModel());
+
+
+        QMessageBox::information(nullptr, QObject::tr("Supprimer constructeur"),
+                    QObject::tr("constructeur supprimé.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
-ok.notification_supprimer_client(okd);
+
     }
     else
-        QMessageBox::critical(nullptr, QObject::tr("Supprimer un client"),
-                    QObject::tr("Erreur !.\n"
+        QMessageBox::critical(nullptr, QObject::tr("Supprimer constructeur"),
+                    QObject::tr("verifier l'id  !.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
-void Gestion::on_pushButton_16_clicked()
+
+
+void gestion::on_suppavions_clicked()
 {
-    QString okd="";
-         notification ok;
-
-
-    QString nom = ui->lineEdit_15->text();
-        QString prenom = ui->lineEdit_16->text();
-       QString num_passeport  = ui->lineEdit_18->text();
-     QString nationnalite  = ui->lineEdit_19->text();
-     QString email=ui->lineEdit_email->text();
-     QString num_telephone=ui->lineEdit_num_telephone->text();
-     int nb_voyages=ui->lineEdit_nb_voyages->text().toInt();
-     Clients c(nom,prenom,num_passeport,nationnalite,email,num_telephone,nb_voyages);
-     bool test=c.ajouter_client();
-     if(test)
-   {ui->tableView_3->setModel(tmpclient.afficher());//refresh
-   QMessageBox::information(nullptr, QObject::tr("Ajouter un client"),
-                     QObject::tr("client ajouté.\n"
-                                 "Click Cancel to exit."), QMessageBox::Cancel);
-   ok.notification_ajout_client(okd);
-
-   }
-     else
-       {  QMessageBox::critical(nullptr, QObject::tr("Ajouter un client"),
-                     QObject::tr("Erreur !.\n"
-                                 "Click Cancel to exit."), QMessageBox::Cancel);
-}
-}
-
-//Modifier!!!
-
-
-
-
-
-
-
-
-
-void Gestion::on_ajouter_promotion_clicked()
-{
-    QString okd="";
-         notification ok;
-
-    QString id = ui->lineEdit_id->text();
-    QString pourcentage  = ui->lineEdit_pourcentage->text();
-        QString evenement = ui->lineEdit_evenement->text();
-
-     Promotions p(pourcentage,evenement,id,tmppromo.getnum_passeport());
-
-     bool test=p.ajouter_promotions();
-     if(test)
-   {ui->tableView_3->setModel(tmppromo.afficher());//refresh
-   QMessageBox::information(nullptr, QObject::tr("Ajouter une prmotion"),
-                     QObject::tr("PROMOTION ajoutée.\n"
-                                 "Click Cancel to exit."), QMessageBox::Cancel);
-   ok.notification_ajout_promo(okd);
-
-   }
-     else
-       {  QMessageBox::critical(nullptr, QObject::tr("Ajouter une promotion"),
-                     QObject::tr("Erreur !.\n"
-                                 "Click Cancel to exit."), QMessageBox::Cancel);
-}
-}
-
-
-
-
-
-
-void Gestion::on_comboBox_activated(const QString &arg1)
-{
-    tmppromo.set_num_passeport(arg1);
-}
-
-void Gestion::on_supprimer_promotion_clicked()
-{    QString okd="";
-     notification ok;
-
-    QString id= ui->lineEdit_supprimer_promotion->text();
-    bool test=tmppromo.supprimer_promotions(id);
+    QString id = ui->comboBox_id_supp->currentText();
+    bool test=tmpavions.supprimer_avions(id);
     if(test)
-    {ui->tab_promotions->setModel(tmpclient.afficher());//refresh
-        QMessageBox::information(nullptr, QObject::tr("Supprimer une promotion"),
-                    QObject::tr("Promotion supprimée.\n"
+    {
+        ui->tab_avions->setModel(tmpavions.afficher_avions());
+        ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+        ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+        ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+        ui->comboBox_id_supp->setModel(tmpavions.getIdModel());
+        refresh();
+
+ initialiser_supp();
+        //refresh
+        QMessageBox::information(nullptr, QObject::tr("Supprimer avions"),
+                    QObject::tr("avion supprimé.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
-ok.notification_supprimer_promo(okd);
     }
     else
-        QMessageBox::critical(nullptr, QObject::tr("Supprimer une promotion"),
-                    QObject::tr("Erreur !.\n"
+        QMessageBox::critical(nullptr, QObject::tr("Supprimer avions"),
+                    QObject::tr("verifier l'id  !.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
-void Gestion::on_pushButton_27_clicked()
+void gestion::on_ajouter_av_clicked()
 {
     QString okd="";
-         notification ok;
-    QString id = ui->lineEdit_id->text();
-    QString pourcentage  = ui->lineEdit_pourcentage->text();
-        QString evenement = ui->lineEdit_evenement->text();
+          notification ok;
+          ok.notification_ajout_avion(okd);
+    QString id = ui->lineEdit_idavion->text();
+    QString etat1= etat;
+    avions a(id,etat1,tmpavions.get_ID_CONSTRUCTEUR());
 
-    Promotions p;
-    if(p.rech(id)){
-        bool test = p.modifier(pourcentage,evenement,tmppromo.getnum_passeport(),id);
-        if(test){
-            ui->tab_promotions->setModel(tmppromo.afficher());
-            QMessageBox::information(nullptr,QObject::tr("Promotion modifée"),QObject::tr("click cancel to exit!"),QMessageBox::Cancel);
-      ok.notification_modifier_promo(okd);
-        }
+    bool test=a.ajouter_avions();
+    if(test)
+    {
+      ui->tab_avions->setModel(tmpavions.afficher_avions());//refresh
+      refresh();
+      initialiser();
+      ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+      ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+      ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
 
-        else
-          {  QMessageBox::critical(nullptr, QObject::tr("Modifier une promotion"),
-                        QObject::tr("Erreur !.\n"
-                                    "Click Cancel to exit."), QMessageBox::Cancel);}
+      ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+      ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+
+      QMessageBox::information(nullptr, QObject::tr("Ajouter un avions"),
+                  QObject::tr("avion ajouté.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+  else
+      QMessageBox::critical(nullptr, QObject::tr("Ajouter un avions"),
+                  QObject::tr("avion existe deja  !.\n"
+                              "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+void gestion::on_id_constructeur_activated(const QString &arg1)
+{
+    tmpavions.set_ID_CONSTRUCTEUR(arg1);
+
+}
+
+void gestion::on_id_constructeur_3_activated(const QString &arg1)
+{
+    tmpavions.set_ID_CONSTRUCTEUR(arg1);
+}
+
+void gestion::on_modifier_av_clicked()
+{
+    tmpavions.set_etat(ui->lineEdit_etat_3->text());
+    bool test=tmpavions.modifier();
+if(test)
+{
+   ui->tab_avions->setModel(tmpavions.afficher_avions());//refresh
+
+   ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+   ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+   ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+
+   ui->comboBox_id_mod->setModel(tmpavions.afficher_avionslist());
+   ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+   refresh();
+   initialiser();
+   initialiser_modifier();
+
+    QMessageBox::information(nullptr, QObject::tr("modifer un avions"),
+                QObject::tr("avion modifié.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+else
+    QMessageBox::critical(nullptr, QObject::tr("modifier un avions"),
+                QObject::tr("avion non valide  !.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+
+void gestion::on_modifier_constructeur_clicked()
+{
+    tmpconstructeur.set_nom(ui->lineEdit_nom_const_mod->text());
+    tmpconstructeur.set_mail(ui->lineEdit_mail_const_mod->text());
+bool test=tmpconstructeur.modifier_constructeur();
+if(test)
+{
+    ui->tab_constructeur->setModel(tmpconstructeur.afficher_constructeur());
+    refresh();
+    initialiser_modifier();
+    //refresh
+    ui->id_constructeur->setModel(tmpconstructeur.afficher_constructeurlist());
+    ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+    ui->comboBox_id_const_mod->setModel(tmpconstructeur.afficher_constructeurlist());
+
+    ui->id_constructeur_3->setModel(tmpconstructeur.afficher_constructeurlist());
+
+    QMessageBox::information(nullptr, QObject::tr("modifer un constructeur"),
+                QObject::tr("constructeur modifié.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+
+}
+else
+    QMessageBox::critical(nullptr, QObject::tr("modifier un constructeur"),
+                QObject::tr("constructeur non valide  !.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+
+void gestion::on_chercher_constructeur_textChanged(const QString &arg1)
+{
+    if(k==0)
+        ui->tab_constructeur2->setModel(tmpconstructeur.chercher_constructeur_id(arg1));
+    if(k==1)
+        ui->tab_constructeur2->setModel(tmpconstructeur.chercher_constructeur_nom(arg1));
+    if(k==2)
+        ui->tab_constructeur2->setModel(tmpconstructeur.chercher_constructeur_mail(arg1));
+}
+
+
+void gestion::on_chercher_avion_textChanged(const QString &arg1)
+{
+     if(k==0)
+     ui->tab_avions2->setModel(tmpavions.chercher_avions_id(arg1));
+     if(k==1)
+     ui->tab_avions2->setModel(tmpavions.chercher_avions_etat(arg1));
+     if(k==2)
+     ui->tab_avions2->setModel(tmpavions.chercher_avions_ID_CONSTRUCTEUR(arg1));
+}
+
+
+void gestion::on_trier_selon_id_clicked()
+{
+     ui->tab_avions->setModel(tmpavions.afficher_tri_id());
+}
+void gestion::on_trier_selon_id_desc_clicked()
+{
+    ui->tab_avions->setModel(tmpavions.afficher_tri_id_desc());
+}
+
+
+void gestion::on_trier_selon_etat_clicked()
+{
+     ui->tab_avions->setModel(tmpavions.afficher_tri_etat());
+}
+void gestion::on_trier_selon_etat_desc_clicked()
+{
+    ui->tab_avions->setModel(tmpavions.afficher_tri_etat_desc());
+}
+
+
+void gestion::on_trier_selon_id_constructeur_clicked()
+{
+    ui->tab_avions->setModel(tmpavions.afficher_tri_ID_CONSTRUCTEUR());
+}
+void gestion::on_trier_selon_id_constructeur_desc_clicked()
+{
+    ui->tab_avions->setModel(tmpavions.afficher_tri_ID_CONSTRUCTEUR_desc());
+}
+
+
+
+void gestion::on_comboBox_id_mod_activated(const QString &arg1)
+{
+    tmpavions.set_id(arg1);
+}
+
+void gestion::on_comboBox_id_const_mod_activated(const QString &arg1)
+{
+    tmpconstructeur.set_id(arg1);
+}
+
+void gestion::on_pushButton_tri_id_const_clicked()
+{
+    ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_id());
+}
+void gestion::on_pushButton_tri_id_const_desc_clicked()
+{
+     ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_id_desc());
+}
+
+
+void gestion::on_pushButton_tri_nom_const_clicked()
+{
+     ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_nom());
+}
+void gestion::on_pushButton_tri_nom_const_desc_clicked()
+{
+     ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_nom_desc());
+}
+
+
+void gestion::on_pushButton_tri_mail_const_clicked()
+{
+     ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_mail());
+}
+void gestion::on_pushButton_tri_mail_const_desc_clicked()
+{
+     ui->tab_constructeur->setModel(tmpconstructeur.afficher_tri_mail_desc());
+}
+
+
+void gestion::sendMail()
+{
+    Smtp* smtp = new Smtp(ui->uname->text(), ui->paswd->text(), ui->server->text(), ui->port->text().toUShort());
+    connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+
+    smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
+}
+
+void gestion::mailSent(QString status)
+{
+    if(status == "Message sent")
+        QMessageBox::warning( nullptr, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+}
+
+void gestion::on_consulter_stat_clicked()
+{
+statistiques *s = new statistiques();
+setWindowModality(Qt::WindowModal);
+s->show();
+}
+
+void gestion::on_enpanne_clicked(bool checked)
+{
+    if(checked)
+        etat="en panne";
+}
+
+void gestion::on_fonctionnel_clicked(bool checked)
+{
+    if(checked)
+        etat="fonctionnel";
+}
+
+
+void gestion::on_comboBox_id_mod_currentTextChanged(const QString &arg1)
+{
+    QString id = arg1;
+    QSqlQuery query;
+    QString ide;
+    query.exec("select * from avion where id_avion ='"+id+"'");
+    while(query.next())
+    {
+    ui->lineEdit_etat_3->setText(query.value(1).toString());
+    ui->id_constructeur_3->setCurrentText(query.value(2).toString());
     }
 }
 
-void Gestion::on_pushButton_20_clicked()
+void gestion::on_comboBox_id_const_mod_currentTextChanged(const QString &arg1)
 {
-    QString okd="";
-         notification ok;
-
-    QString nom = ui->lineEdit_24->text();
-    QString prenom = ui->lineEdit_17->text();
-    QString num_passeport = ui->lineEdit_21->text();
-    QString nationnalite = ui->lineEdit_22->text();
-    QString email = ui->lineEdit_email_2->text();
-    QString num_telephone = ui->lineEdit_num_telephone_2->text();
-    int nb_voyages = ui->lineEdit_nb_voyages_2->text().toInt();
-
-
-    Clients c;
-    if(c.rech(num_passeport)){
-        bool test = c.modifier(nom,prenom,num_passeport,nationnalite,email,num_telephone,nb_voyages);
-        if(test){
-            ui->tableView_3->setModel(tmpclient.afficher());
-            QMessageBox::information(nullptr,QObject::tr("Clients modifié"),QObject::tr("click cancel to exit!"),QMessageBox::Cancel);
-       ok.notification_modifier_client(okd);
-        }
-
-        else
-          {  QMessageBox::critical(nullptr, QObject::tr("Modifier un client"),
-                        QObject::tr("Erreur !.\n"
-                                    "Click Cancel to exit."), QMessageBox::Cancel);}
+    QString id = arg1;
+    QSqlQuery query;
+    QString ide;
+    query.exec("select * from constructeur where id_constructeur ='"+id+"'");
+    while(query.next())
+    {
+    ui->lineEdit_nom_const_mod->setText(query.value(1).toString());
+    ui->lineEdit_mail_const_mod->setText(query.value(2).toString());
     }
 }
 
-void Gestion::on_pushButton_23_clicked()
+
+void gestion::on_checkBox_toggled(bool checked)
 {
-    close();
+    k=0;
+    ui->checkBox_2->setCheckState(Qt::CheckState(0));
+    ui->checkBox_3->setCheckState(Qt::CheckState(0));
 }
 
-void Gestion::on_pushButton_24_clicked()
+void gestion::on_checkBox_2_toggled(bool checked)
 {
-     close();
+    k=1;
+    ui->checkBox->setCheckState(Qt::CheckState(0));
+    ui->checkBox_3->setCheckState(Qt::CheckState(0));
 }
 
-void Gestion::on_pushButton_22_clicked()
+void gestion::on_checkBox_3_toggled(bool checked)
 {
-     close();
-}
-
-void Gestion::on_pushButton_25_clicked()
-{
-     close();
-}
-
-void Gestion::on_pushButton_clicked()
-{
-    ui->tableView_3->setModel(tmpclient.afficher_tri());
-}
-
-void Gestion::on_pushButton_2_clicked()
-{
-  ui->tab_promotions->setModel(tmppromo.afficher_tri());
-}
-
-void Gestion::on_pushButton_5_clicked()
-{
-    QString num_passeport;
-
-     num_passeport=ui->lineEdit_chercher_client->text();
-     QSqlQueryModel *model=new QSqlQueryModel();
-     QSqlQuery* query=new QSqlQuery();
-     query->prepare("Select * from CLIENTS where num_passeport=:num_passeport ");
-     query->bindValue(":num_passeport",num_passeport);
-     query->exec();
-     model->setQuery(*query);
-
-    qDebug()<<(model->rowCount());
-    if( (model->rowCount()==0))
-     QMessageBox::information(nullptr, QObject::tr("Rechercher un client "),
-                 QObject::tr(" Ce client n'existe pas .\n"
-                             "Click Cancel to exit."), QMessageBox::Cancel);
-
-
-   else
-     QMessageBox::information(nullptr, QObject::tr("Rechercher un client "),
-                 QObject::tr(" Le client existe \n"
-                             "Click Cancel to exit."), QMessageBox::Cancel);
-
-}
-
-void Gestion::on_lineEdit_chercher_client_cursorPositionChanged()
-{
-Clients c;
-    QString num_passeport=ui->lineEdit_chercher_client->text();
-     c.rechercher_client(ui->tableView_rechercheC,num_passeport);
+    k=2;
+    ui->checkBox->setCheckState(Qt::CheckState(0));
+    ui->checkBox_2->setCheckState(Qt::CheckState(0));
 }
 
 
-void Gestion::on_lineEdit_id_3_cursorPositionChanged()
+void gestion::on_checkBox_id_avion_toggled(bool checked)
 {
-    Promotions p;
-    QString ID_PROMO=ui->lineEdit_id_3->text();
-    p.rechercher_promotion(ui->tableView_rechercheC_2,ID_PROMO);
+    k=0;
+    ui->checkBox_etat_avion->setCheckState(Qt::CheckState(0));
+    ui->checkBox_id_const_avion->setCheckState(Qt::CheckState(0));
 }
 
-
-void Gestion::on_pushButton_6_clicked()
+void gestion::on_checkBox_etat_avion_toggled(bool checked)
 {
-    QString ID_PROMO;
-
-     ID_PROMO=ui->lineEdit_id_3->text();
-     QSqlQueryModel *model=new QSqlQueryModel();
-     QSqlQuery* query=new QSqlQuery();
-     query->prepare("Select * from PROMOTIONS where ID_PROMO=:ID_PROMO");
-     query->bindValue(":ID_PROMO",ID_PROMO);
-     query->exec();
-     model->setQuery(*query);
-
-    qDebug()<<(model->rowCount());
-    if( (model->rowCount()==0))
-     QMessageBox::information(nullptr, QObject::tr("Rechercher une promotion"),
-                 QObject::tr(" Cette promotion n'existe pas .\n"
-                             "Click Cancel to exit."), QMessageBox::Cancel);
-
-
-   else
-     QMessageBox::information(nullptr, QObject::tr("Rechercher une promotion "),
-                 QObject::tr(" La promotion existe \n"
-                             "Click Cancel to exit."), QMessageBox::Cancel);
-
+    k=1;
+    ui->checkBox_id_avion->setCheckState(Qt::CheckState(0));
+    ui->checkBox_id_const_avion->setCheckState(Qt::CheckState(0));
 }
 
-void Gestion::on_comboBox_3_activated(const QString &arg1)
+void gestion::on_checkBox_id_const_avion_toggled(bool checked)
 {
-   tmppromo.set_num_passeport(arg1);
-}
-
-void Gestion::on_comboBox_4_activated(const QString &arg1)
-{
-    tmppromo.set_num_passeport(arg1);
+    k=2;
+    ui->checkBox_id_avion->setCheckState(Qt::CheckState(0));
+    ui->checkBox_etat_avion->setCheckState(Qt::CheckState(0));
 }
 
 
 
-void Gestion::on_pushButton_3_clicked()
-{
-    mail m ;
-   m.setWindowTitle("Envoyer un mail");
-    m.exec();
-}
 
-void Gestion::on_pushButton_consulter_clicked()
-{
-    statistiques *s = new statistiques();
-    setWindowModality(Qt::WindowModal);
-    s->show();
-}
-
-
-
-void Gestion::on_pushButton_7_clicked()
-{
-    close();
-}

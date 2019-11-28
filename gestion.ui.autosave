@@ -35,7 +35,7 @@
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -558,6 +558,9 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
+       </property>
        <property name="text">
         <string>Rechercher selon :</string>
        </property>
@@ -570,6 +573,9 @@
          <width>161</width>
          <height>31</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
        </property>
       </widget>
       <widget class="QTableView" name="tab_constructeur2">
@@ -591,6 +597,15 @@
          <height>17</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>Script MT Bold</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
+       </property>
        <property name="text">
         <string>Id</string>
        </property>
@@ -604,6 +619,15 @@
          <height>17</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <family>Script MT Bold</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
+       </property>
        <property name="text">
         <string>Nom</string>
        </property>
@@ -616,6 +640,15 @@
          <width>70</width>
          <height>17</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Script MT Bold</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
        </property>
        <property name="text">
         <string>Mail</string>

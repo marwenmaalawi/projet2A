@@ -1,4 +1,5 @@
 #include "statistiques.h"
+#include "ui_statistiques.h"
 #include "connexion.h"
 #include <QMap>
 #include <QVector>
@@ -15,13 +16,11 @@
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 #include <QtWidgets/QGridLayout>
-#include "ui_statistiques.h"
 #include <QSqlQuery>
 #include <QDebug>
-#include <QDialog>
 QT_CHARTS_USE_NAMESPACE
-statistiques::statistiques(QDialog *parent) :
-    QDialog(parent),
+statistiques::statistiques(QWidget *parent) :
+    QWidget(parent),
     ui(new Ui::statistiques)
 {
     ui->setupUi(this);
@@ -29,10 +28,10 @@ statistiques::statistiques(QDialog *parent) :
         QPieSeries *series = new QPieSeries();
         QSqlQuery qry;
         int tous=0;
-        int etrangere=0;
-        int tunisienne=0;
+        int panne=0;
+        int fonctionnel=0;
 
-        qry.prepare("select * from clients ");
+        qry.prepare("select * from avion ");
         if (qry.exec())
         {
 
@@ -40,14 +39,13 @@ statistiques::statistiques(QDialog *parent) :
             {
 
     tous++;
-
-    if(qry.value(3)=="tunisienne")
+    if (qry.value(1)=="en panne")
     {
-        tunisienne++;
+        panne++;
     }
-    else if(qry.value(3)!="tunisienne")
+    else if(qry.value(1)=="fonctionnel")
     {
-        etrangere++;
+        fonctionnel++;
     }
 
 
@@ -55,16 +53,16 @@ statistiques::statistiques(QDialog *parent) :
         }
 
 
-        qDebug () << " " << etrangere;
-            qDebug () << " " << tunisienne;
+        qDebug () << " " << panne;
+            qDebug () << " " << fonctionnel;
 
 
-float testing1 =(etrangere*100)/tous;
+float testing1 =(panne*100)/tous;
 float testing2 =100-testing1;
 QString pleasework = QString::number(testing1);
 QString pleaseworks= QString::number(testing2);
-    series ->append("etrangere "+pleasework+"%",(etrangere));
-        series ->append("tunisienne "+pleaseworks+"%",(tunisienne));
+    series ->append("panne "+pleasework+"%",(panne));
+        series ->append("fonctionnel "+pleaseworks+"%",(fonctionnel));
 
 
 QPieSlice * slice0= series->slices().at(0);
@@ -72,7 +70,7 @@ slice0->setLabelVisible();
 QPieSlice * slice1= series->slices().at(1);
 slice1->setLabelVisible();
 
-    if (etrangere>tunisienne)
+    if (panne>fonctionnel)
     {
 
        slice0->setExploded();

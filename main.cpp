@@ -1,23 +1,18 @@
 #include "mainwindow.h"
-
 #include <QApplication>
-#include "connexion.h"
 #include <QMessageBox>
+#include "connexion.h"
 #include <QtDebug>
 int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.setWindowTitle("Connexion de l'Admin");
-    connexion c;
-    try {
-        c.ouvrirConnexion();
-        w.show();
+{  QApplication a(argc, argv);
 
-    } catch (QString s) {
-        qDebug()<<s;
+    Connexion c;
 
-    }
-    w.show();
-    return a.exec();
-}
+  bool test=c.ouvrirConnexion();
+  MainWindow w;
+
+  if(test)
+  {w.show();}
+
+
+    return a.exec();}

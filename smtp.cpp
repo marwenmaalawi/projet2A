@@ -51,9 +51,9 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
 
     t = new QTextStream( socket );
 
-
-
 }
+
+
 
 Smtp::~Smtp()
 {
