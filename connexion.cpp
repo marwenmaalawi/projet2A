@@ -1,12 +1,13 @@
 #include "connexion.h"
-#include <QSqlError>
+#include "QtSql/qsqlerror.h"
+
 Connexion::Connexion(){
                       }
 bool Connexion::ouvrirConnexion()
 {bool test=false;
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
-                           db.setDatabaseName("mybase");
-                           db.setUserName("ons");//inserer nom de l'utilisateur
+                           db.setDatabaseName("Source_Projet2A");
+                           db.setUserName("systeme");//inserer nom de l'utilisateur
                            db.setPassword("esprit19");//inserer mot de passe de cet utilisateur
 
 if (db.open())

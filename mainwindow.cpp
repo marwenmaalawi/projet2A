@@ -1,13 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "gestion.h"
+#include "gestionproduit.h"
+#include"QMessageBox"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    setWindowModality(Qt::WindowModal);
 }
 
 MainWindow::~MainWindow()
@@ -17,29 +16,15 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::on_pushButton_clicked()
-{
-   QString identifiant;
-   QString mot_de_passe;
-   identifiant = ui->lineEdit->text();
-   mot_de_passe = ui->lineEdit_2->text();
-
-   if(identifiant=="please" && mot_de_passe == "work")
-   { gestion g;
-    g.exec() ;}
-
+{ QString k,t;
+    k=ui->pass->text();
+    t=ui->user->text();
+    if(k==login && t==lo)
+    {gestionproduit gp;
+        gp.exec();
+    }else { QMessageBox::information(this,"title","mot de passe ou adresse incorect");
 
 }
 
-void MainWindow::on_checkBox_clicked(bool checked)
-{
-    if(checked)
-    {
-
-        ui->lineEdit_2->setEchoMode(QLineEdit::EchoMode(0));
-    }
-    else
-    {
-        ui->lineEdit_2->setEchoMode(QLineEdit::EchoMode(2));
-    }
 
 }

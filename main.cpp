@@ -1,18 +1,16 @@
-#include "mainwindow.h"
+  #include "mainwindow.h"
+
 #include <QApplication>
-#include <QMessageBox>
 #include "connexion.h"
 #include <QtDebug>
 int main(int argc, char *argv[])
-{  QApplication a(argc, argv);
-
-    Connexion c;
-
-  bool test=c.ouvrirConnexion();
-  MainWindow w;
-
-  if(test)
-  {w.show();}
-
-
-    return a.exec();}
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    Connexion c ;
+    try { c.ouvrirConnexion() ;
+      w.show();}catch (QString s)
+    {qDebug()<<s;}
+    w.show();
+    return a.exec();
+}

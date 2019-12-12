@@ -2,4 +2,12 @@
     <qresource prefix="/img">
         <file>img/background-smh-avion.jpg</file>
     </qresource>
+    <qresource prefix="/">
+        <file>../../syw - v2/img/login button.jpg</file>
+        <file>img/pngtree-login-glyph-black-icon-png-image_4008314.jpg</file>
+        <file>connexion.cpp</file>
+        <file>img/imagesBX6EVV58.jpg</file>
+        <file>img/seeeeeeeeeeeeeeeee.jpg</file>
+        <file>img/about-us-image.jpg</file>
+    </qresource>
 </RCC>
